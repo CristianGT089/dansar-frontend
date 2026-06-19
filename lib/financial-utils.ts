@@ -19,7 +19,7 @@ export function deltaColor(v: number | null | undefined): string {
 
 /** Solo tipografía y color de texto — sin backgrounds (para celdas sticky) */
 export function levelTextStyle(level: number): string {
-  if (level === -1) return "text-emerald-400 font-bold tracking-wide";
+  if (level === -1) return "text-primary font-bold tracking-wide";
   if (level === 0)  return "font-bold text-foreground tracking-wide uppercase text-[10px]";
   if (level === 1)  return "font-semibold text-foreground/90";
   if (level === 2)  return "text-muted-foreground";
@@ -28,7 +28,7 @@ export function levelTextStyle(level: number): string {
 
 /** Background de fila — va en el <tr> y en la celda sticky (sólido para sticky) */
 export function levelRowBg(level: number): string {
-  if (level === -1) return "bg-emerald-950/60 dark:bg-emerald-950/60";
+  if (level === -1) return "bg-primary/10";
   if (level === 0)  return "bg-muted/40";
   return "";
 }

@@ -14,7 +14,7 @@ interface Props { columns: Column[]; rows: Row[]; yearA: number; yearB: number }
 function stickyBgStyle(level: number): React.CSSProperties {
   // Valores sólidos que visualmente equivalen a las clases semi-transparentes
   // sobre el fondo de card (dark: #14161F, light: #fff)
-  if (level === -1) return { backgroundColor: "rgb(5 46 22)"  }; // emerald-950 sólido
+  if (level === -1) return { backgroundColor: "hsl(234 85% 64% / 0.12)" }; // primary/10 sólido equivalente
   if (level === 0)  return { backgroundColor: "hsl(var(--muted) / 1)" };
   return { backgroundColor: "hsl(var(--card))" };
 }

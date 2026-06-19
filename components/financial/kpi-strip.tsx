@@ -61,7 +61,7 @@ export function KpiStrip({ yearA, yearB }: Props) {
       <KpiCard
         title={`Utilidad Bruta ${yearB.label}`}
         value={fmtMoney(yearB.utilidad_bruta)}
-        accentClass="bg-emerald-500"
+        accentClass="bg-violet-500"
         icon={TrendingUp}
       />
       <KpiCard
