@@ -51,7 +51,7 @@ export function SalesMixChart({ data, year }: { data: any[]; year: number }) {
     <ResponsiveContainer width="100%" height={260}>
       <PieChart>
         <Pie data={data} dataKey="valor" nameKey="categoria" cx="50%" cy="50%"
-          innerRadius={60} outerRadius={100} label={({ categoria, percent }) => `${categoria} ${(percent * 100).toFixed(0)}%`}
+          innerRadius={60} outerRadius={100} label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
           labelLine={true}
         >
           {data.map((entry: any) => (
