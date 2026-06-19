@@ -12,8 +12,8 @@ export default function EmpresaLayout({
     <CompanyGuard companyId={params.companyId}>
       <div className="flex h-screen overflow-hidden">
         <CompanySidebar companyId={params.companyId} />
-        <main className="flex-1 overflow-y-auto bg-muted/20">
-          <div className="container max-w-6xl py-8">{children}</div>
+        <main className="flex-1 overflow-y-auto bg-background">
+          <div className="mx-auto max-w-6xl px-8 py-7">{children}</div>
         </main>
       </div>
     </CompanyGuard>

@@ -14,13 +14,13 @@ export function fmtDelta(v: number | null | undefined): string {
 
 export function deltaColor(v: number | null | undefined): string {
   if (v == null) return "text-muted-foreground";
-  return v >= 0 ? "text-emerald-500" : "text-red-500";
+  return v >= 0 ? "text-emerald-500" : "text-red-400";
 }
 
 export function levelStyle(level: number): string {
-  if (level === -1) return "bg-emerald-950/40 text-emerald-400 font-bold";
-  if (level === 0)  return "bg-muted/40 font-bold text-foreground";
-  if (level === 1)  return "text-blue-400 font-semibold";
-  if (level === 2)  return "text-muted-foreground pl-4";
-  return "text-muted-foreground/70 text-xs pl-8";
+  if (level === -1) return "bg-emerald-500/8 text-emerald-400 font-bold tracking-wide";
+  if (level === 0)  return "bg-muted/50 font-bold text-foreground tracking-wide uppercase text-[10px]";
+  if (level === 1)  return "font-semibold text-foreground/90";
+  if (level === 2)  return "text-muted-foreground";
+  return "text-muted-foreground/60 text-[11px]";
 }

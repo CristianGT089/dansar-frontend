@@ -3,49 +3,73 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── Light theme ─────────────────────────────────────────── */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --background:         230 18% 95%;
+    --foreground:         228 20% 13%;
+    --card:               0 0% 100%;
+    --card-foreground:    228 20% 13%;
+    --popover:            0 0% 100%;
+    --popover-foreground: 228 20% 13%;
+    --primary:            234 85% 64%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:          230 25% 91%;
+    --secondary-foreground: 228 20% 25%;
+    --muted:              230 22% 92%;
+    --muted-foreground:   232 10% 45%;
+    --accent:             234 85% 96%;
+    --accent-foreground:  234 85% 40%;
+    --destructive:        0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border:             230 18% 88%;
+    --input:              230 18% 88%;
+    --ring:               234 85% 64%;
+    --radius:             0.4rem;
   }
 
+  /* ── Dark theme ──────────────────────────────────────────── */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --background:         226 20% 8%;
+    --foreground:         232 25% 92%;
+    --card:               228 18% 11%;
+    --card-foreground:    232 25% 92%;
+    --popover:            228 18% 13%;
+    --popover-foreground: 232 25% 92%;
+    --primary:            234 85% 64%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:          228 18% 16%;
+    --secondary-foreground: 232 25% 80%;
+    --muted:              228 18% 15%;
+    --muted-foreground:   232 12% 52%;
+    --accent:             228 18% 16%;
+    --accent-foreground:  234 85% 72%;
+    --destructive:        0 63% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border:             228 18% 19%;
+    --input:              228 18% 19%;
+    --ring:               234 85% 64%;
+    --radius:             0.4rem;
   }
 }
 
 @layer base {
   * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Zebra rows */
+  .table-zebra tbody tr:nth-child(even) {
+    background-color: hsl(var(--muted) / 0.35);
+  }
+
+  /* Slim scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.4); }
 }
