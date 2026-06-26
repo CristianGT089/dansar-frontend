@@ -60,3 +60,23 @@ export function useRemoveUserFromCompany(companyId: string) {
       qc.invalidateQueries({ queryKey: userKeys.companyUsers(companyId) }),
   });
 }
+
+export function useCreateUserForCompany(companyId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: { email: string; full_name: string; password: string; role: string }) =>
+      api.post(`/companies/${companyId}/users/create`, payload).then((r) => r.data),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: userKeys.companyUsers(companyId) }),
+  });
+}
+
+export function useChangeUserRole(companyId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ userId, role }: { userId: string; role: string }) =>
+      api.patch(`/companies/${companyId}/users/${userId}/role`, { role }).then((r) => r.data),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: userKeys.companyUsers(companyId) }),
+  });
+}

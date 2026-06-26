@@ -47,14 +47,32 @@ export interface Feature {
   name: string;
   description: string | null;
   module: string | null;
+  parent_key: string | null;
 }
 
-export interface CompanyFeatureItem {
+export type SubRole = "admin" | "contador" | "viewer";
+
+export interface SubFeatureStatus {
   feature_id: string;
   key: string;
   name: string;
   module: string | null;
-  enabled: boolean;
+  is_enabled: boolean;
+  allowed_roles: SubRole[];
+}
+
+export interface FeatureStatus {
+  feature_id: string;
+  key: string;
+  name: string;
+  module: string | null;
+  is_enabled: boolean;
+  children: SubFeatureStatus[];
+}
+
+export interface CompanyFeaturesResponse {
+  company_id: string;
+  features: FeatureStatus[];
 }
 
 export interface UserCompanyRole {
@@ -63,6 +81,7 @@ export interface UserCompanyRole {
   role: "admin" | "contador" | "viewer";
   is_active: boolean;
   user: User;
+  company?: { id: string; name: string };
 }
 
 export type Role = "superadmin" | "admin" | "contador" | "viewer";

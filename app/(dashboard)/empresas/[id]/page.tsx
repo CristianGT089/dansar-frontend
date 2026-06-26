@@ -6,7 +6,9 @@ import { ArrowLeft, ToggleLeft, ToggleRight, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useCompany, useToggleCompanyStatus } from "@/lib/queries/companies";
 import { useCompanyUsers, useAssignUserToCompany, useRemoveUserFromCompany, useUsers } from "@/lib/queries/users";
-import { useCompanyFeatures, useToggleFeature } from "@/lib/queries/plans";
+import { useCompanyFeatures, useToggleFeature, useToggleSubfeature, useSetFeatureRoles } from "@/lib/queries/plans";
+import { FeatureTree } from "@/components/plans/feature-tree";
+import type { SubRole } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -29,6 +31,8 @@ export default function CompanyDetailPage() {
   const { data: allUsers } = useUsers();
   const toggleStatus = useToggleCompanyStatus(id);
   const toggleFeature = useToggleFeature(id);
+  const toggleSubfeature = useToggleSubfeature(id);
+  const setFeatureRoles = useSetFeatureRoles(id);
   const removeUser = useRemoveUserFromCompany(id);
   const assignUser = useAssignUserToCompany(id);
 
@@ -194,39 +198,16 @@ export default function CompanyDetailPage() {
       </Dialog>
 
       {/* Tab: Features */}
-      {tab === "features" && (
-        <div className="space-y-3">
-          {features?.map((feature) => (
-            <Card key={feature.feature_id}>
-              <CardContent className="flex items-center justify-between p-4">
-                <div>
-                  <p className="font-medium">{feature.name}</p>
-                  <p className="text-xs text-muted-foreground">{feature.module} · {feature.key}</p>
-                </div>
-                {user?.is_superadmin ? (
-                  <button
-                    onClick={() =>
-                      toggleFeature.mutate({ feature_key: feature.key, enabled: !feature.enabled })
-                    }
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      feature.enabled ? "bg-primary" : "bg-muted"
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        feature.enabled ? "translate-x-6" : "translate-x-1"
-                      }`}
-                    />
-                  </button>
-                ) : (
-                  <Badge variant={feature.enabled ? "success" : "secondary"}>
-                    {feature.enabled ? "Activa" : "Inactiva"}
-                  </Badge>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      {tab === "features" && features && (
+        <FeatureTree
+          features={features}
+          canToggleParent={!!user?.is_superadmin}
+          canManageChildren={!!user?.is_superadmin}
+          onToggleParent={(key, enabled) => toggleFeature.mutate({ feature_key: key, enabled })}
+          onToggleChild={(key, enabled) => toggleSubfeature.mutate({ featureKey: key, enabled })}
+          onSetRoles={(key, roles) => setFeatureRoles.mutate({ featureKey: key, roles })}
+          isPending={toggleFeature.isPending || toggleSubfeature.isPending || setFeatureRoles.isPending}
+        />
       )}
     </div>
   );
