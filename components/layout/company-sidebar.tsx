@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, BarChart3, BookOpen, PieChart,
-  LogOut, Building2, ChevronRight, ChevronLeft,
+  LogOut, Building2, ChevronRight, ChevronLeft, Settings,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -23,10 +23,11 @@ interface NavItem {
 
 function getNavItems(companyId: string): NavItem[] {
   return [
-    { href: `/empresa/${companyId}`,                         label: "Inicio",              icon: LayoutDashboard },
-    { href: `/empresa/${companyId}/financiero`,               label: "Financiero",          icon: BarChart3,  feature: "financial_dashboard" },
-    { href: `/empresa/${companyId}/financiero/graficos`,      label: "Gráficos",            icon: PieChart,   feature: "financial_dashboard", sub: true },
-    { href: `/empresa/${companyId}/financiero/libro-mayor`,   label: "Libro Mayor",         icon: BookOpen,   feature: "financial_dashboard", sub: true },
+    { href: `/empresa/${companyId}`,                          label: "Inicio",      icon: LayoutDashboard },
+    { href: `/empresa/${companyId}/financiero`,                label: "Financiero",  icon: BarChart3,  feature: "financial_dashboard" },
+    { href: `/empresa/${companyId}/financiero/graficos`,       label: "Gráficos",    icon: PieChart,   feature: "financial.charts",    sub: true },
+    { href: `/empresa/${companyId}/financiero/libro-mayor`,    label: "Libro Mayor", icon: BookOpen,   feature: "financial.libro_mayor", sub: true },
+    { href: `/empresa/${companyId}/configuracion`,             label: "Configuración", icon: Settings },
   ];
 }
 
