@@ -29,8 +29,10 @@ export function useToggleFeature(companyId: string) {
   return useMutation({
     mutationFn: (payload: { feature_key: string; enabled: boolean }) =>
       api.post(`/companies/${companyId}/plan/features/toggle`, payload).then((r) => r.data),
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] });
+      qc.invalidateQueries({ queryKey: ["me"] });
+    },
   });
 }
 
@@ -40,8 +42,10 @@ export function useToggleSubfeature(companyId: string) {
   return useMutation({
     mutationFn: ({ featureKey, enabled }: { featureKey: string; enabled: boolean }) =>
       api.patch(`/companies/${companyId}/plan/features/${featureKey}/toggle`, { enabled }).then((r) => r.data),
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] });
+      qc.invalidateQueries({ queryKey: ["me"] });
+    },
   });
 }
 
@@ -51,8 +55,10 @@ export function useSetFeatureRoles(companyId: string) {
   return useMutation({
     mutationFn: ({ featureKey, roles }: { featureKey: string; roles: SubRole[] }) =>
       api.patch(`/companies/${companyId}/plan/features/${featureKey}/roles`, { roles }).then((r) => r.data),
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] });
+      qc.invalidateQueries({ queryKey: ["me"] });
+    },
   });
 }
 

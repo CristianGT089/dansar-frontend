@@ -59,6 +59,8 @@ api.interceptors.response.use(
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("refresh_token", data.refresh_token);
       useAuthStore.getState().setTokens(data.access_token, data.refresh_token);
+      // Refresh user data (features/roles may have changed since last login)
+      api.get("/auth/me").then(({ data: me }) => useAuthStore.getState().setUser(me)).catch(() => {});
       processQueue(null, data.access_token);
       original.headers.Authorization = `Bearer ${data.access_token}`;
       return api(original);

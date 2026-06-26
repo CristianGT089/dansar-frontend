@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/stores/auth";
 import { useCompanyStore } from "@/lib/stores/company";
+import { useMe } from "@/lib/queries/auth";
 
 interface CompanyGuardProps {
   companyId: string;
@@ -15,6 +16,7 @@ export function CompanyGuard({ companyId, children }: CompanyGuardProps) {
   const { isAuthenticated, user, hasCompanyAccess, companies } = useAuthStore();
   const { setActiveCompany } = useCompanyStore();
   const [hydrated, setHydrated] = useState(false);
+  useMe();
 
   useEffect(() => {
     const unsub = useAuthStore.persist.onFinishHydration(() => setHydrated(true));
