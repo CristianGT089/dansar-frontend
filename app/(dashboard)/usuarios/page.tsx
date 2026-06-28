@@ -240,33 +240,40 @@ function CompanyMembersRow({ company, allUsers }: { company: Company; allUsers: 
             {/* Agregar usuario existente */}
             <div className="border-t px-4 py-3">
               {addOpen ? (
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex flex-col gap-2">
                   <select
                     value={selectedUserId}
                     onChange={(e) => setSelectedUserId(e.target.value)}
-                    className="flex-1 min-w-0 rounded-md border bg-background px-2 py-1.5 text-sm"
+                    className="w-full rounded-md border bg-background px-3 py-2 text-sm"
                   >
                     <option value="">Seleccionar usuario...</option>
                     {availableUsers.map((u) => (
-                      <option key={u.id} value={u.id}>{u.full_name} ({u.email})</option>
+                      <option key={u.id} value={u.id}>{u.full_name} — {u.email}</option>
                     ))}
                   </select>
-                  <select
-                    value={selectedRole}
-                    onChange={(e) => setSelectedRole(e.target.value)}
-                    className="rounded-md border bg-background px-2 py-1.5 text-sm"
-                  >
-                    {["admin", "contador", "viewer"].map((r) => (
-                      <option key={r} value={r}>{ROLE_LABELS[r]}</option>
-                    ))}
-                  </select>
-                  <Button size="sm" onClick={handleAdd} disabled={!selectedUserId || assignUser.isPending}>
-                    Agregar
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setAddOpen(false)}>
-                    Cancelar
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={selectedRole}
+                      onChange={(e) => setSelectedRole(e.target.value)}
+                      className="flex-1 rounded-md border bg-background px-3 py-2 text-sm"
+                    >
+                      {["admin", "contador", "viewer"].map((r) => (
+                        <option key={r} value={r}>{ROLE_LABELS[r]}</option>
+                      ))}
+                    </select>
+                    <Button size="sm" onClick={handleAdd} disabled={!selectedUserId || assignUser.isPending}>
+                      Agregar
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => setAddOpen(false)}>
+                      Cancelar
+                    </Button>
+                  </div>
                 </div>
+              ) : availableUsers.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  Todos los usuarios ya están en esta empresa.{" "}
+                  <span className="font-medium">Crea un nuevo usuario</span> desde la vista &ldquo;Por usuario&rdquo; para agregarlo.
+                </p>
               ) : (
                 <button
                   onClick={() => setAddOpen(true)}
