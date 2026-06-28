@@ -2,10 +2,11 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, LogOut, Building2, ChevronUp } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/lib/stores/auth";
 import { api } from "@/lib/api";
+import { ThemeToggle } from "./theme-toggle";
 
 interface NavItem {
   href: string;
@@ -129,6 +130,7 @@ export function MobileNav({ navItems, title, subtitle, logoInitials = "DS", extr
             {/* Footer del sheet */}
             <div className="px-3 pb-3 pt-1 border-t border-border mt-1 space-y-1">
               {extraFooter}
+              <ThemeToggle variant="sheet" />
               <button
                 onClick={handleLogout}
                 className="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
