@@ -33,7 +33,7 @@ export interface PaginatedResponse<T> {
   page_size: number;
 }
 
-export interface Plan {
+export interface Module {
   id: string;
   name: string;
   type: "basic" | "professional" | "enterprise";
@@ -52,23 +52,19 @@ export interface Feature {
 
 export type SubRole = "admin" | "contador" | "viewer";
 
-export interface SubFeatureStatus {
+export interface FeatureNode {
   feature_id: string;
   key: string;
   name: string;
   module: string | null;
   is_enabled: boolean;
   allowed_roles: SubRole[];
+  children: FeatureNode[];
 }
 
-export interface FeatureStatus {
-  feature_id: string;
-  key: string;
-  name: string;
-  module: string | null;
-  is_enabled: boolean;
-  children: SubFeatureStatus[];
-}
+// Alias para compatibilidad con componentes existentes
+export type FeatureStatus = FeatureNode;
+export type SubFeatureStatus = FeatureNode;
 
 export interface CompanyFeaturesResponse {
   company_id: string;

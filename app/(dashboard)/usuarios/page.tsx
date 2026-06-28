@@ -51,10 +51,10 @@ function UserRow({ user }: { user: { id: string; full_name: string; email: strin
     <Card>
       <CardContent className="p-0">
         <div className="flex items-center justify-between p-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <button
               onClick={() => setExpanded((e) => !e)}
-              className="text-muted-foreground hover:text-foreground"
+              className="shrink-0 text-muted-foreground hover:text-foreground"
               disabled={user.is_superadmin}
             >
               {user.is_superadmin ? (
@@ -65,15 +65,15 @@ function UserRow({ user }: { user: { id: string; full_name: string; email: strin
                 <ChevronRight className="h-4 w-4" />
               )}
             </button>
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary">
               <UserCircle2 className="h-5 w-5 text-muted-foreground" />
             </div>
-            <div>
-              <p className="font-medium">{user.full_name}</p>
-              <p className="text-sm text-muted-foreground">{user.email}</p>
+            <div className="min-w-0">
+              <p className="font-medium truncate">{user.full_name}</p>
+              <p className="text-sm text-muted-foreground truncate">{user.email}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             {user.is_superadmin && (
               <Badge className="bg-purple-100 text-purple-800 border-0">Superadmin</Badge>
             )}
@@ -132,7 +132,7 @@ export default function UsuariosPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Usuarios</h1>
           <p className="text-muted-foreground">
@@ -141,7 +141,7 @@ export default function UsuariosPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="w-full sm:w-auto">
               <Plus className="mr-2 h-4 w-4" />
               Nuevo usuario
             </Button>
