@@ -21,7 +21,7 @@ export default function EmpresasPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Empresas</h1>
           <p className="text-muted-foreground">
@@ -31,7 +31,7 @@ export default function EmpresasPage() {
         {user?.is_superadmin && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="w-full sm:w-auto">
                 <Plus className="mr-2 h-4 w-4" />
                 Nueva empresa
               </Button>
@@ -61,18 +61,18 @@ export default function EmpresasPage() {
           {data?.items.map((company) => (
             <Card key={company.id} className="transition-shadow hover:shadow-md">
               <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
                     <Building2 className="h-5 w-5 text-primary" />
                   </div>
-                  <div>
-                    <p className="font-medium">{company.name}</p>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="min-w-0">
+                    <p className="font-medium truncate">{company.name}</p>
+                    <p className="text-sm text-muted-foreground truncate">
                       {company.tax_id ?? "Sin NIT"} · {company.email ?? "Sin email"}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex shrink-0 items-center gap-3">
                   <Badge variant={company.is_active ? "success" : "destructive"}>
                     {company.is_active ? "Activa" : "Inactiva"}
                   </Badge>

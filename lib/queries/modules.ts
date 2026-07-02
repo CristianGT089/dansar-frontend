@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import type { CompanyFeaturesResponse, FeatureStatus, Plan, SubRole } from "@/types";
+import type { CompanyFeaturesResponse, FeatureStatus, Module, SubRole } from "@/types";
 
-export function usePlans() {
+export function useModules() {
   return useQuery({
-    queryKey: ["plans"],
+    queryKey: ["modules"],
     queryFn: async () => {
-      const { data } = await api.get<Plan[]>("/plans");
+      const { data } = await api.get<Module[]>("/modules");
       return data;
     },
   });
@@ -16,7 +16,7 @@ export function useCompanyFeatures(companyId: string) {
   return useQuery({
     queryKey: ["companies", companyId, "features"],
     queryFn: async () => {
-      const { data } = await api.get<CompanyFeaturesResponse>(`/companies/${companyId}/plan`);
+      const { data } = await api.get<CompanyFeaturesResponse>(`/companies/${companyId}/module`);
       return data.features;
     },
     enabled: !!companyId,
@@ -28,7 +28,7 @@ export function useToggleFeature(companyId: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: { feature_key: string; enabled: boolean }) =>
-      api.post(`/companies/${companyId}/plan/features/toggle`, payload).then((r) => r.data),
+      api.post(`/companies/${companyId}/module/features/toggle`, payload).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] });
       qc.invalidateQueries({ queryKey: ["me"] });
@@ -41,7 +41,7 @@ export function useToggleSubfeature(companyId: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ featureKey, enabled }: { featureKey: string; enabled: boolean }) =>
-      api.patch(`/companies/${companyId}/plan/features/${featureKey}/toggle`, { enabled }).then((r) => r.data),
+      api.patch(`/companies/${companyId}/module/features/${featureKey}/toggle`, { enabled }).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] });
       qc.invalidateQueries({ queryKey: ["me"] });
@@ -54,7 +54,7 @@ export function useSetFeatureRoles(companyId: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ featureKey, roles }: { featureKey: string; roles: SubRole[] }) =>
-      api.patch(`/companies/${companyId}/plan/features/${featureKey}/roles`, { roles }).then((r) => r.data),
+      api.patch(`/companies/${companyId}/module/features/${featureKey}/roles`, { roles }).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["companies", companyId, "features"] });
       qc.invalidateQueries({ queryKey: ["me"] });
@@ -62,11 +62,11 @@ export function useSetFeatureRoles(companyId: string) {
   });
 }
 
-export function useAssignPlan(companyId: string) {
+export function useAssignModule(companyId: string) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (plan_type: string) =>
-      api.post(`/companies/${companyId}/plan/assign`, { plan_type }).then((r) => r.data),
+    mutationFn: (module_type: string) =>
+      api.post(`/companies/${companyId}/module/assign`, { module_type }).then((r) => r.data),
     onSuccess: () =>
       qc.invalidateQueries({ queryKey: ["companies", companyId] }),
   });
